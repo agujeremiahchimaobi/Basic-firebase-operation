@@ -28,11 +28,17 @@ class _SignInState extends State<SignIn> {
           email: _emailController.text, password: _passwordController.text);
 
       if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('User Signed in successfully'),
+            backgroundColor: Colors.green),
+      );
       Navigator.pushNamed(context, HomePage.id);
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message!),
+          backgroundColor: Colors.red,
         ),
       );
     }
@@ -86,7 +92,7 @@ class _SignInState extends State<SignIn> {
                 child: const Text('Forgot Password'),
               ),
               const SizedBox(height: 20),
-              Text('Sign Un')
+              Text('Sign Up')
             ],
           ),
         ),

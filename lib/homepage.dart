@@ -19,7 +19,14 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [const Text('Signed in as'), Text(user.email!)],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text('Welcome'),
+          Text(
+            user.email!,
+            style: Theme.of(context).textTheme.headline6,
+          )
+        ],
       ),
     );
   }

@@ -51,6 +51,13 @@ class _EmailVerificationState extends State<EmailVerification> {
       isEmailVerified = auth.currentUser!.emailVerified;
     });
     if (isEmailVerified) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email Verified successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
       timer?.cancel;
     }
   }
@@ -64,19 +71,21 @@ class _EmailVerificationState extends State<EmailVerification> {
           ),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'a verification message has been sent to your email',
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Resend Email'),
-                ),
-              ],
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'a verification message has been sent to your email',
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Resend Email'),
+                  ),
+                ],
+              ),
             ),
           ),
         );

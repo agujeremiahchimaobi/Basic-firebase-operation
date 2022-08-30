@@ -3,6 +3,7 @@ import 'package:firebase/emailverification.dart';
 import 'package:firebase/homepage.dart';
 import 'package:firebase/main.dart';
 import 'package:firebase/resetpassword.dart';
+import 'package:firebase/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,12 @@ class _SignUpState extends State<SignUp> {
           email: _emailController.text, password: _passwordController.text);
 
       if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('User Registered successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
       Navigator.pushNamed(context, EmailVerification.id);
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -61,33 +68,41 @@ class _SignUpState extends State<SignUp> {
         padding: const EdgeInsets.all(30),
         child: Form(
           key: formkey,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (email) =>
-                  email != null && !EmailValidator.validate(email)
-                      ? 'Enter a valid Email'
-                      : null,
-            ),
-            SizedBox(height: 30),
-            TextFormField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'password'),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (value) => value != null && value.length < 6
-                  ? 'Password must be at least 6 characters'
-                  : null,
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () async {
-                _register();
-              },
-              child: const Text('Sign Up'),
-            )
-          ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(labelText: 'Email'),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (email) =>
+                    email != null && !EmailValidator.validate(email)
+                        ? 'Enter a valid Email'
+                        : null,
+              ),
+              const SizedBox(height: 30),
+              TextFormField(
+                controller: _passwordController,
+                decoration: const InputDecoration(labelText: 'password'),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) => value != null && value.length < 6
+                    ? 'Password must be at least 6 characters'
+                    : null,
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () async {
+                  _register();
+                },
+                child: const Text('Sign Up'),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, SignIn.id),
+                child: const Text('Sign In'),
+              ),
+            ],
+          ),
         ),
       ),
     );
