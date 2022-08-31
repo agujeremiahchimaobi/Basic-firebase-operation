@@ -20,6 +20,7 @@ class _EmailVerificationState extends State<EmailVerification> {
   @override
   void initState() {
     isEmailVerified = auth.currentUser!.emailVerified;
+
     if (!isEmailVerified) {
       sendVerificationEmail();
 
@@ -40,24 +41,20 @@ class _EmailVerificationState extends State<EmailVerification> {
       final User user = auth.currentUser!;
       await user.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.message!)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message!),
+        ),
+      );
     }
   }
 
   Future checkEmailVerified() async {
-    await auth.currentUser!.reload();
+    await auth.currentUser?.reload();
     setState(() {
       isEmailVerified = auth.currentUser!.emailVerified;
     });
     if (isEmailVerified) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Email Verified successfully'),
-          backgroundColor: Colors.green,
-        ),
-      );
       timer?.cancel;
     }
   }

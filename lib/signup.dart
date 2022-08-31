@@ -42,7 +42,7 @@ class _SignUpState extends State<SignUp> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('User Registered successfully'),
+          content: Text('Verification message sent successfully'),
           backgroundColor: Colors.green,
         ),
       );
@@ -82,6 +82,7 @@ class _SignUpState extends State<SignUp> {
               ),
               const SizedBox(height: 30),
               TextFormField(
+                obscureText: true,
                 controller: _passwordController,
                 decoration: const InputDecoration(labelText: 'password'),
                 autovalidateMode: AutovalidateMode.onUserInteraction,

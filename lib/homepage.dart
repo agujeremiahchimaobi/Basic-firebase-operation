@@ -1,3 +1,4 @@
+import 'package:firebase/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -17,16 +18,26 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Text('Welcome'),
-          Text(
-            user.email!,
-            style: Theme.of(context).textTheme.headline6,
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Welcome'),
+            Text(
+              user.email!,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                await auth.signOut();
+                if (!mounted) return;
+                Navigator.pop(context);
+              },
+              child: const Text('Sign Out'),
+            ),
+          ],
+        ),
       ),
     );
   }
